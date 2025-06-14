@@ -26,6 +26,7 @@
                         <th style="width: 20%;">Qty</th>
                         <th>Harga</th>
                         <th>Total</th>
+                        <th>Aksi</th> <!-- Tambahan -->
                       </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,9 @@
                         </td>
                         <td>Rp {{ item.discount_price.toLocaleString() }}</td>
                         <td>Rp {{ (item.discount_price * item.qty).toLocaleString() }}</td>
+                        <td>
+                          <button class="btn btn-sm btn-danger" @click="removeFromCart(index)">Hapus</button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -246,6 +250,10 @@ export default {
         this.cart.push({ ...product, qty: 1 });
       }
       this.saveCart();
+    },
+    removeFromCart(index) {
+      this.cart.splice(index, 1);
+      this.saveCart(); // Simpan ke localStorage setelah perubahan
     },
     updateQty(index, qty) {
       this.cart[index].qty = qty;
